@@ -6,9 +6,6 @@
 -- Généré le : lun. 17 oct. 2022 à 11:58
 -- Version du serveur : 10.4.24-MariaDB
 -- Version de PHP : 8.1.6
-CREATE DATABASE zombie;
-USE DATABASE zombie;
-
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
