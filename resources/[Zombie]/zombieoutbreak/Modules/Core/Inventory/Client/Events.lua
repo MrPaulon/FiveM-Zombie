@@ -10,21 +10,7 @@ RegisterNUICallback("Inventory:Use", function(Data)
 end)
 
 RegisterNUICallback("Inventory:Give", function(Data)
-    local PlayerCoords = GetEntityCoords(PlayerPedId(), true)
-    for i, _Player in pairs(GetActivePlayers()) do
-        local PlayerId = GetPlayerFromServerId(_Player)
-        local PlayerTargetCoods = GetEntityCoords(GetPlayerPed(PlayerId), true)
-        local Distance = Vdist(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, PlayerTargetCoods.x, PlayerTargetCoods.y, PlayerTargetCoods.z)
-
-        if PlayerId ~= -1 and Distance < 1.5 then
-            if Data.Input > 0 then
-                TriggerServerEvent("Inventory:Give", PlayerId, Data.Item, Data.Input)
-            end
-        else
-            Player.ShowNotification(Translate("Inventory:No_Player_Nearby"))
-        end
-    end
-
+    TriggerEvent('Inventory:GiveItem', Data)
 end)
 
 RegisterNUICallback("Inventory:Throw", function(Data)

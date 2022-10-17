@@ -21,6 +21,11 @@ AddEventHandler("Identity:CreateIdentity", function(Data)
     })
 end)
 
+RegisterNetEvent('Identity:RegisterDBClothes')
+AddEventHandler('Identity:RegisterDBClothes', function(Name, Label, Description) 
+    Database.ExecuteInsertQuery("INSERT INTO clothes (`Name`, `Label`, `Description`, `Weight`, `Limit`) VALUES ('" .. Name .. "', '" .. Label .. "', '"..Description.."', 0.3, 1)")
+end)
+
 RegisterNetEvent("Identity:OccupationSuit")
 AddEventHandler("Identity:OccupationSuit", function(Sex)
     local _Player = Player(source)

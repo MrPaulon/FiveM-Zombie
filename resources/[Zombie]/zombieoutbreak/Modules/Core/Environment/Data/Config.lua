@@ -4,6 +4,7 @@ Config.PercentageVehiclesUndriveable = 40
 Config.SafeZones = {
     {x = 399.3766, y = -1629.9512, z = 29.2918, radius = 80.0},
     {x = 197.7237, y = 2775.9678, z = 45.2805, radius = 80.0},
+    {x = -452.8981, y = 6006.8638, z = 36.6476, radius = 60.0},
     {x = -410.2006, y = 1178.7404, z = 325.6281, radius = 130.0}
 }
 

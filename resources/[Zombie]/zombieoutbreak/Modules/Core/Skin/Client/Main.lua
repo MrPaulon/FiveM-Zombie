@@ -16,6 +16,7 @@ Skin.ArmorOn = false -- New! 9
 Skin.BagOn = false -- New 10
 Skin.PantsOn = false -- 11
 Skin.ShoesOn = false -- 12
+Skin.TopOn = false -- 13
 Skin.ActiveClothes = {}
 
 Skin.SetPlayerModel = function(Model)
@@ -226,6 +227,14 @@ Skin.SetClothes = function(Sex, Component, DrawableId, TextureIdl, PaletteId)
             SetPedComponentVariation(PlayerPedId(), 6, DrawableId, TextureIdl, PaletteId)
         end
         Skin.ShoesOn = true
+    elseif Component == 13 then
+        if Sex == "Male" then
+            SetPedComponentVariation(PlayerPedId(), 11, DrawableId, TextureIdl, PaletteId)
+        elseif Sex == "Female" then
+            SetPedComponentVariation(PlayerPedId(), 11, DrawableId, TextureIdl, PaletteId)
+        end
+
+        Skin.TopOn = true
     end
 
 end
@@ -270,12 +279,12 @@ Skin.DeleteClothes = function(Component) --- -1 (Remove all)
     elseif Component == 7 then
         if Skin.GetPlayerSex() == "Male" then
             SetPedComponentVariation(PlayerPedId(), 10, 0, 0, 0)
-            SetPedComponentVariation(PlayerPedId(), 11, 15, 0, 0)
+            --SetPedComponentVariation(PlayerPedId(), 11, 15, 0, 0)
             SetPedComponentVariation(PlayerPedId(), 8, 15, 0, 0)
             SetPedComponentVariation(PlayerPedId(), 3, 15, 0, 0)
         elseif Skin.GetPlayerSex() == "Female" then
             SetPedComponentVariation(PlayerPedId(), 10, 0, 0, 0)
-            SetPedComponentVariation(PlayerPedId(), 11, 5, 0, 0)
+            --SetPedComponentVariation(PlayerPedId(), 11, 5, 0, 0)
             SetPedComponentVariation(PlayerPedId(), 8, 14, 0, 0)
             SetPedComponentVariation(PlayerPedId(), 3, 15, 0, 0)
         end
@@ -321,6 +330,14 @@ Skin.DeleteClothes = function(Component) --- -1 (Remove all)
         end
 
         Skin.ShoesOn = false
+    elseif Component == 13 then
+        if Skin.GetPlayerSex() == "Male" then
+            SetPedComponentVariation(PlayerPedId(), 11, 15, 0, 0)
+        elseif Skin.GetPlayerSex() == "Female" then
+            SetPedComponentVariation(PlayerPedId(), 11, 5, 0, 0)
+        end
+
+        Skin.TopOn = false
     end
 
     TriggerServerEvent("Skin:DeleteClothes", Component)
@@ -362,4 +379,5 @@ Skin.ClearClothes = function()
     Skin.GlovesOn = false
     Skin.PantsOn = false
     Skin.ShoesOn = false
+    Skin.TopOn = false
 end

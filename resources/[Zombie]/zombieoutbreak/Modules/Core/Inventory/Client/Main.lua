@@ -200,3 +200,30 @@ Inventory.UseClothes = function(Item, Sex)
         Player.ShowNotification(Translate("Inventory:Clothes_Not_Available", Item.Label))
     end
 end
+
+RegisterNetEvent('Inventory:GiveItem')
+AddEventHandler('Inventory:GiveItem', function(Data)
+    local PlayerCoords = GetEntityCoords(PlayerPedId(), true)
+    print(GetActivePlayers())
+    print(json.encode(GetActivePlayers()))
+    for i, _Player in pairs(GetActivePlayers()) do
+        local Ped = GetPlayerPed(_Player)
+        local PlayerClientId = GetPlayerFromServerId(_Player)
+        local PlayerTargetCoods = GetEntityCoords(Ped, true)
+        local Distance = Vdist(PlayerCoords.x, PlayerCoords.y, PlayerCoords.z, PlayerTargetCoods.x, PlayerTargetCoods.y, PlayerTargetCoods.z)
+
+        print(_Player)
+        print(Ped)
+        print(PlayerClientId)
+        print(Distance)
+
+        if Distance > 0.0 and Distance < 1.5 then
+            --if Data.Input > 0 then
+                print('salade')
+                TriggerServerEvent("Inventory:Give", _Player, Data.Item, Data.Input)
+            --end
+        else
+            Player.ShowNotification(Translate("Inventory:No_Player_Nearby"))
+        end
+    end
+end)
