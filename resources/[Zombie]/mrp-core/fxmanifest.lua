@@ -17,3 +17,8 @@ server_scripts {
 }
 
 shared_script {'Core/Environement/shared/config.lua'}
+
+files {
+    'Core/Environement/popcycle.dat'
+}
+data_file 'POPSCHED_FILE' 'Core/Environement/popcycle.dat'
