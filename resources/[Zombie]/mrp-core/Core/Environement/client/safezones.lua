@@ -5,6 +5,18 @@ for i, zone in ipairs(Config.SafeZones) do
     SetBlipAlpha(blip, 128)
 end
 
+for i, location in ipairs(Config.Blips.craft) do
+    blip = AddBlipForCoord(location.x, location.y, location.z)
+    SetBlipSprite(blip, 761)
+    SetBlipDisplay(blip, 4)
+    SetBlipScale(blip, 0.9)
+    SetBlipColour(blip, 28)
+    SetBlipAsShortRange(blip, true)
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentString("Table de craft")
+    EndTextCommandSetBlipName(blip)
+end
+
 Citizen.CreateThread(function() 
     while true do
         Wait(5)

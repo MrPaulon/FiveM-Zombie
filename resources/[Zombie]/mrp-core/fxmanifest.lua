@@ -10,15 +10,17 @@ client_scripts {
     'Core/Player/client/*.lua',
     'Core/Utils/client/*.lua',
 }
+
 server_scripts {
     'Core/Environement/server/*.lua',
     'Core/Player/server/*.lua',
     'Core/Utils/server/*.lua',
 }
 
-shared_script {'Core/Environement/shared/config.lua'}
-
 files {
-    'Core/Environement/popcycle.dat'
+    './Core/Environement/popcycle.dat',
 }
+
+shared_script {'Shared/config.lua'}
+
 data_file 'POPSCHED_FILE' 'Core/Environement/popcycle.dat'

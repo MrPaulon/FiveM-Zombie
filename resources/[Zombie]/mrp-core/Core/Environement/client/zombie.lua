@@ -1,3 +1,13 @@
+ESX = nil
+playerData = nil
+Citizen.CreateThread(function()
+	while ESX == nil do
+		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+		Citizen.Wait(0)
+	end
+	playerData = ESX.GetPlayerData()
+end)
+
 local PlayerGroup, ZombieGroup = "PLAYER", "ZOMBIE"
 local Player = PlayerPedId()
 
@@ -190,8 +200,9 @@ Citizen.CreateThread(function()
 
                 if Distance <= 1.2 and not IsPedInAnyVehicle(PlayerPedId(), true) and DecorGetBool(PedHandler, "ZombieLoot") then
                     local Ground, Zpos = GetGroundZFor_3dCoord_2(PedCoords.x, PedCoords.y, PedCoords.z, false)
-                    Utils.DrawText3D(Translate("Plague:Loot"),PedCoords.x, PedCoords.y, Zpos + 0.2, 0.5, 4)
-                    if (IsControlJustPressed(0, 289)) and not Player.Dead() then
+                    local textCoords = vector3(PedCoords.x, PedCoords.y, Zpos + 0.2)
+                    ESX.Game.Utils.DrawText3D(textCoords,"[E] Loot",0.4)
+                    if (IsControlJustPressed(0, 51)) and GetEntityHealth(PlayerPedId()) > 0 then
                         ClearPedTasksImmediately(PlayerPedId())
                         RequestAnimDict("amb@medic@standing@kneel@base")
                         while not HasAnimDictLoaded("amb@medic@standing@kneel@base") do
@@ -199,13 +210,34 @@ Citizen.CreateThread(function()
                         end
                         TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base", "base", 5.0, 10.0, -1, 1, 0, false, false, false)
 
-                        SendNUIMessage({
-                            Type = "UpdateLoot",
-                            Display = true,
-                            Ped = PedHandler,
-                            Inventory = Inventory.Loot[PedHandler]
-                        })
+                        exports['nc-progressbar']:Progress({
+                            name = "loot",
+                            duration = 1000,
+                            label = "Loot",
+                            useWhileDead = false,
+                            canCancel = false,
+                            controlDisables = true,
+                            animation = animation,
+                            prop = nil,
+                            propTwo = nil,
+                        }, function(cancelled)
+                            if not cancelled then
+                                if onFinish then
+                                    onFinish()
+                                end
+                            else
+                                if onCancel then
+                                    onCancel()
+                                end
+                            end
+                        end)
+                        Wait(1500)
+                        
+                        local random2 = math.random(1, #Config.Loot)
 
+                        TriggerServerEvent('mrp-core:giveitem', Config.Loot[random2], 1)
+
+                        ClearPedTasksImmediately(PlayerPedId())
                     end
                 end
             end
